@@ -1,0 +1,2785 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استمارة تحكيم الممارسات التربوية الدامجة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 12.5%;
+        }
+
+        .page-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .page-subtitle {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input[type="radio"] {
+            margin-left: 8px;
+            margin-right: 5px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .radio-group label:hover {
+            border-color: #3498db;
+            background: #f0f8ff;
+        }
+
+        .radio-group input[type="radio"]:checked + span {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .radio-group label:has(input:checked) {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        .criteria-reminder {
+            background: #e8f4fd;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .criteria-reminder h3 {
+            color: #2980b9;
+            margin-bottom: 15px;
+        }
+
+        .criteria-reminder ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .criteria-reminder li {
+            margin-bottom: 8px;
+            padding: 5px 10px;
+            background: white;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        .item-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .item-card:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.15);
+        }
+
+        .item-number {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .item-text {
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-right: 60px;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .evaluation-section {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .criterion {
+            margin-bottom: 20px;
+        }
+
+        .criterion-label {
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .criterion.clarity .criterion-label { color: #e74c3c; }
+        .criterion.relevance .criterion-label { color: #f39c12; }
+        .criterion.comprehensiveness .criterion-label { color: #27ae60; }
+
+        .final-decision {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .final-decision .radio-group {
+            justify-content: center;
+        }
+
+        .final-decision .radio-group label {
+            padding: 12px 20px;
+            font-weight: bold;
+        }
+
+        .final-decision .radio-group label:nth-child(1) { border-color: #27ae60; color: #27ae60; }
+        .final-decision .radio-group label:nth-child(2) { border-color: #f39c12; color: #f39c12; }
+        .final-decision .radio-group label:nth-child(3) { border-color: #e74c3c; color: #e74c3c; }
+
+        .comments-section {
+            margin-top: 20px;
+        }
+
+        .comments-section textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        .comments-section textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .save-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+        }
+
+        .chapter-summary {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .chapter-summary h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .general-comments {
+            margin-top: 30px;
+        }
+
+        .general-comments textarea {
+            min-height: 120px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #ffeeba;
+            color: #856404;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .final-evaluation {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .final-evaluation h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .evaluation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+            }
+
+            .evaluation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="save-indicator" id="saveIndicator">
+        ✓ تم الحفظ تلقائياً
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>استمارة تحكيم الممارسات التربوية الدامجة</h1>
+            <p>المقياس الميداني لمدى التزام أساتذة التعليم الابتدائي بالممارسات التربوية الدامجة للتلاميذ في وضعية إعاقة ذهنية</p>
+        </div>
+
+        <div class="content">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <!-- صفحة الترحيب -->
+            <div class="page active" id="page0">
+                <div class="page-title">مرحباً بكم في استمارة التحكيم</div>
+                
+                <div class="page-subtitle">
+                    <strong>الغرض من التحكيم:</strong> تقييم جودة أداة قياس مدى التزام أساتذة التعليم الابتدائي بالممارسات التربوية الدامجة وفق المرجعيات المغربية الرسمية.
+                </div>
+
+                <div style="background: white; padding: 25px; border-radius: 10px; border: 2px solid #3498db; margin: 25px 0;">
+                    <h3 style="color: #2980b9; margin-bottom: 15px;">المرجعيات المعتمدة:</h3>
+                    <ul style="list-style-type: disc; padding-right: 20px; color: #555;">
+                        <li>الإطار المرجعي للتربية الدامجة لفائدة الأطفال في وضعية إعاقة – وزارة التربية الوطنية (2019)</li>
+                        <li>دليل الأستاذ للتربية الدامجة</li>
+                        <li>القرار الوزاري رقم 047.19 بشأن التربية الدامجة للتلميذات والتلاميذ في وضعية إعاقة</li>
+                    </ul>
+                </div>
+
+                <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin: 25px 0;">
+                    <h4 style="color: #27ae60; margin-bottom: 10px;">ما المطلوب منكم:</h4>
+                    <p>• تقييم 36 بند موزعة على 6 محاور</p>
+                    <p>• كل بند يُقيم وفق 3 معايير علمية</p>
+                    <p>• الوقت المتوقع: 45-60 دقيقة</p>
+                    <p>• يمكنكم الحفظ والعودة لاحقاً</p>
+                </div>
+
+                <div class="navigation-buttons">
+                    <div></div>
+                    <button class="btn" onclick="nextPage()">البدء في التحكيم</button>
+                </div>
+            </div>
+
+            <!-- صفحة بيانات المحكم -->
+            <div class="page" id="page1">
+                <div class="page-title">بيانات المحكم</div>
+                <div class="page-subtitle">معلومات عامة (اختيارية) تساعد في توثيق عملية التحكيم</div>
+
+                <div class="form-group">
+                    <label>1. كيف تحب أن تُعرّف نفسك مهنياً؟</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="expert_role" value="أستاذ جامعي"><span>أستاذ جامعي</span></label>
+                        <label><input type="radio" name="expert_role" value="دكتور/باحث"><span>دكتور/باحث</span></label>
+                        <label><input type="radio" name="expert_role" value="مختص في التربية الدامجة"><span>مختص في التربية الدامجة</span></label>
+                        <label><input type="radio" name="expert_role" value="مختص في التربية الخاصة"><span>مختص في التربية الخاصة</span></label>
+                        <label><input type="radio" name="expert_role" value="مفتش تربوي"><span>مفتش تربوي</span></label>
+                        <label><input type="radio" name="expert_role" value="مدير مؤسسة تعليمية"><span>مدير مؤسسة تعليمية</span></label>
+                        <label><input type="radio" name="expert_role" value="أخرى"><span>أخرى</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>2. ما طبيعة تجربتك مع التربية الدامجة؟ (يمكن اختيار أكثر من إجابة)</label>
+                    <div class="radio-group" style="flex-direction: column; align-items: flex-start;">
+                        <label><input type="checkbox" name="experience" value="تدريس أطفال في وضعية إعاقة"><span>تدريس أطفال في وضعية إعاقة</span></label>
+                        <label><input type="checkbox" name="experience" value="البحث الأكاديمي في هذا المجال"><span>البحث الأكاديمي في هذا المجال</span></label>
+                        <label><input type="checkbox" name="experience" value="تدريب معلمين"><span>تدريب معلمين</span></label>
+                        <label><input type="checkbox" name="experience" value="إدارة برامج دامجة"><span>إدارة برامج دامجة</span></label>
+                        <label><input type="checkbox" name="experience" value="ولي أمر لطفل في وضعية إعاقة"><span>ولي أمر لطفل في وضعية إعاقة</span></label>
+                        <label><input type="checkbox" name="experience" value="أخرى"><span>أخرى</span></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>3. كم سنة خبرتك في مجال التربية بشكل عام؟</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="years_experience" value="أقل من 5 سنوات"><span>أقل من 5 سنوات</span></label>
+                        <label><input type="radio" name="years_experience" value="5-10 سنوات"><span>5-10 سنوات</span></label>
+                        <label><input type="radio" name="years_experience" value="10-20 سنة"><span>10-20 سنة</span></label>
+                        <label><input type="radio" name="years_experience" value="أكثر من 20 سنة"><span>أكثر من 20 سنة</span></label>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevPage()">السابق</button>
+                    <button class="btn" onclick="nextPage()">التالي</button>
+                </div>
+            </div>
+
+            <!-- صفحة تعليمات التحكيم -->
+            <div class="page" id="page2">
+                <div class="page-title">تعليمات التحكيم</div>
+                
+                <div class="criteria-reminder">
+                    <h3>معايير التقييم - يرجى قراءتها بعناية</h3>
+                    <ul>
+                        <li><strong style="color: #e74c3c;">الوضوح والصياغة:</strong> مدى وضوح البند وسلامته اللغوية وخلوه من الغموض</li>
+                        <li><strong style="color: #f39c12;">الصلة والأهمية:</strong> مدى ارتباط البند بالموضوع وأهميته في قياس الممارسات الدامجة</li>
+                        <li><strong style="color: #27ae60;">الشمولية والتطبيق:</strong> مدى مساهمة البند في التغطية الشاملة للموضوع وقابليته للتطبيق</li>
+                    </ul>
+                </div>
+
+                <div style="background: white; border: 2px solid #3498db; border-radius: 10px; padding: 25px; margin: 25px 0;">
+                    <h4 style="color: #2980b9; margin-bottom: 15px;">مقياس التقييم (1-5):</h4>
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; text-align: center;">
+                        <div style="background: #e74c3c; color: white; padding: 10px; border-radius: 5px; font-weight: bold;">1<br>ضعيف جداً</div>
+                        <div style="background: #e67e22; color: white; padding: 10px; border-radius: 5px; font-weight: bold;">2<br>ضعيف</div>
+                        <div style="background: #f39c12; color: white; padding: 10px; border-radius: 5px; font-weight: bold;">3<br>متوسط</div>
+                        <div style="background: #27ae60; color: white; padding: 10px; border-radius: 5px; font-weight: bold;">4<br>جيد</div>
+                        <div style="background: #2ecc71; color: white; padding: 10px; border-radius: 5px; font-weight: bold;">5<br>ممتاز</div>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>ملاحظة مهمة:</strong> سيتم حفظ إجاباتكم تلقائياً كل 30 ثانية. يمكنكم إغلاق المتصفح والعودة لاحقاً لإكمال التحكيم.
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevPage()">السابق</button>
+                    <button class="btn" onclick="nextPage()">بدء التحكيم</button>
+                </div>
+            </div>
+
+            <!-- المحور الأول: التشخيص التربوي -->
+            <div class="page" id="page3">
+                <div class="page-title">المحور الأول: التشخيص التربوي</div>
+                <div class="page-subtitle">
+                    <strong>المقصود:</strong> جمع معلومات دقيقة عن قدرات وحاجيات التلميذ في وضعية إعاقة ذهنية قبل وأثناء التعليم، باستخدام أدوات متنوعة، مع إشراك الأسرة والفريق متعدد التخصصات.<br>
+                    <strong>المراجع:</strong> الإطار المرجعي (ص. 55–56)، دليل الأستاذ (ص. 50)، القرار 047.19 (المادة 5).
+                </div>
+
+                <div class="criteria-reminder">
+                    <h3>تذكير سريع بمعايير التقييم:</h3>
+                    <ul>
+                        <li><strong style="color: #e74c3c;">الوضوح والصياغة:</strong> 1=غير واضح → 5=واضح تماماً</li>
+                        <li><strong style="color: #f39c12;">الصلة والأهمية:</strong> 1=غير مرتبط → 5=ضروري ومرتبط</li>
+                        <li><strong style="color: #27ae60;">الشمولية والتطبيق:</strong> 1=لا يساهم → 5=يساهم بشكل أساسي</li>
+                    </ul>
+                </div>
+
+                <div class="item-card">
+                    <div class="item-number">البند 1 من 36</div>
+                    <div class="item-text">أجري تقويمًا تشخيصيًا أوليًا لتحديد قدرات وحاجيات كل تلميذ في وضعية إعاقة ذهنية قبل بدء التدريس.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item1_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item1_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item1_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item1_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item1_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item1_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item1_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item1_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item1_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item1_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item1_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item1_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item1_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item1_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item1_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item1_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item1_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item1_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item1_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 2 -->
+                <div class="item-card">
+                    <div class="item-number">البند 2 من 36</div>
+                    <div class="item-text">أستعمل أدوات متعددة (مقابلات، ملاحظات صفية، اختبارات مبسطة) لجمع معلومات دقيقة حول التلميذ في وضعية إعاقة ذهنية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item2_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item2_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item2_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item2_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item2_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item2_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item2_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item2_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item2_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item2_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item2_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item2_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item2_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item2_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item2_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item2_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item2_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item2_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item2_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 3 -->
+                <div class="item-card">
+                    <div class="item-number">البند 3 من 36</div>
+                    <div class="item-text">أحدد مستوى الأداء الحالي للتلميذ في المجالات الأكاديمية، التواصلية، الاجتماعية، والحركية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item3_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item3_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item3_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item3_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item3_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item3_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item3_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item3_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item3_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item3_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item3_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item3_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item3_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item3_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item3_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item3_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item3_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item3_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item3_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 4 -->
+                <div class="item-card">
+                    <div class="item-number">البند 4 من 36</div>
+                    <div class="item-text">أطلب آراء أو تقارير الأخصائيين (نفسي، نطق، علاج وظيفي) لاستكمال التشخيص.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item4_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item4_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item4_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item4_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item4_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item4_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item4_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item4_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item4_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item4_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item4_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item4_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item4_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item4_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item4_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item4_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item4_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item4_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item4_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 5 -->
+                <div class="item-card">
+                    <div class="item-number">البند 5 من 36</div>
+                    <div class="item-text">أُعد تقريرًا تشخيصيًا مكتوبًا يتضمن الحاجات التربوية للتلميذ في وضعية إعاقة ذهنية وأضعه في ملفه المدرسي.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item5_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item5_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item5_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item5_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item5_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item5_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item5_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item5_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item5_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item5_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item5_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item5_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item5_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item5_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item5_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item5_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item5_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item5_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item5_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="general-comments">
+                    <label><strong>ملاحظات عامة حول المحور الأول (اختياري):</strong></label>
+                    <textarea name="chapter1_comments" placeholder="اكتب ملاحظاتك العامة حول محور التشخيص التربوي..."></textarea>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevPage()">السابق</button>
+                    <button class="btn" onclick="nextPage()">التالي - المحور الثاني</button>
+                </div>
+            </div>
+
+            <!-- المحور الثاني: التخطيط البيداغوجي الفردي وتكييف التعلمات -->
+            <div class="page" id="page4">
+                <div class="page-title">المحور الثاني: التخطيط البيداغوجي الفردي وتكييف التعلمات</div>
+                <div class="page-subtitle">
+                    <strong>المقصود:</strong> إعداد المشروع البيداغوجي الفردي (PPI) استنادًا إلى التشخيص، وتكييف الأهداف والمحتوى والزمن وطرق التدريس بما يلائم قدرات التلميذ.<br>
+                    <strong>المراجع:</strong> الإطار المرجعي (ص. 40–42)، دليل الأستاذ (ص. 51–61)، القرار 047.19 (المواد 4 و7).
+                </div>
+
+                <div class="criteria-reminder">
+                    <h3>تذكير سريع بمعايير التقييم:</h3>
+                    <ul>
+                        <li><strong style="color: #e74c3c;">الوضوح والصياغة:</strong> 1=غير واضح → 5=واضح تماماً</li>
+                        <li><strong style="color: #f39c12;">الصلة والأهمية:</strong> 1=غير مرتبط → 5=ضروري ومرتبط</li>
+                        <li><strong style="color: #27ae60;">الشمولية والتطبيق:</strong> 1=لا يساهم → 5=يساهم بشكل أساسي</li>
+                    </ul>
+                </div>
+
+                <!-- البند 6 -->
+                <div class="item-card">
+                    <div class="item-number">البند 6 من 36</div>
+                    <div class="item-text">أشارك في إعداد المشروع البيداغوجي الفردي للتلميذ في وضعية إعاقة ذهنية بالتعاون مع الفريق التربوي والأسرة.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item6_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item6_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item6_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item6_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item6_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item6_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item6_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item6_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item6_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item6_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item6_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item6_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item6_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item6_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item6_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item6_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item6_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item6_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item6_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- سأواصل مع بقية البنود 7-12 بنفس الشكل... -->
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevPage()">السابق</button>
+                    <button class="btn" onclick="nextPage()">التالي - المحور الثالث</button>
+                </div>
+            </div>
+
+            <!-- سأواصل مع باقي المحاور... -->
+
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const totalPages = 9; // 0: ترحيب، 1: بيانات، 2: تعليمات، 3-8: المحاور، 9: تقييم عام
+        let formData = {};
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+            updateProgress();
+            setupAutoSave();
+        });
+
+        // التنقل بين الصفحات
+        function nextPage() {
+            if (currentPage < totalPages) {
+                saveCurrentPageData();
+                document.getElementById(`page${currentPage}`).classList.remove('active');
+                currentPage++;
+                document.getElementById(`page${currentPage}`).classList.add('active');
+                updateProgress();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                saveCurrentPageData();
+                document.getElementById(`page${currentPage}`).classList.remove('active');
+                currentPage--;
+                document.getElementById(`page${currentPage}`).classList.add('active');
+                updateProgress();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // تحديث شريط التقدم
+        function updateProgress() {
+            const progress = ((currentPage + 1) / (totalPages + 1)) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // حفظ بيانات الصفحة الحالية
+        function saveCurrentPageData() {
+            const currentPageElement = document.getElementById(`page${currentPage}`);
+            const inputs = currentPageElement.querySelectorAll('input, textarea, select');
+            
+            inputs.forEach(input => {
+                if (input.type === 'radio' || input.type === 'checkbox') {
+                    if (input.checked) {
+                        if (input.type === 'checkbox') {
+                            if (!formData[input.name]) formData[input.name] = [];
+                            formData[input.name].push(input.value);
+                        } else {
+                            formData[input.name] = input.value;
+                        }
+                    }
+                } else {
+                    formData[input.name] = input.value;
+                }
+            });
+
+            // حفظ في التخزين المحلي
+            localStorage.setItem('evaluationFormData', JSON.stringify(formData));
+        }
+
+        // تحميل البيانات المحفوظة
+        function loadSavedData() {
+            const savedData = localStorage.getItem('evaluationFormData');
+            if (savedData) {
+                formData = JSON.parse(savedData);
+                restoreFormData();
+            }
+        }
+
+        // استعادة البيانات في النموذج
+        function restoreFormData() {
+            Object.keys(formData).forEach(name => {
+                const elements = document.querySelectorAll(`[name="${name}"]`);
+                elements.forEach(element => {
+                    if (element.type === 'radio') {
+                        if (element.value === formData[name]) {
+                            element.checked = true;
+                        }
+                    } else if (element.type === 'checkbox') {
+                        if (Array.isArray(formData[name]) && formData[name].includes(element.value)) {
+                            element.checked = true;
+                        }
+                    } else {
+                        element.value = formData[name] || '';
+                    }
+                });
+            });
+        }
+
+        // الحفظ التلقائي
+        function setupAutoSave() {
+            setInterval(() => {
+                saveCurrentPageData();
+                showSaveIndicator();
+            }, 30000); // كل 30 ثانية
+        }
+
+        // إظهار مؤشر الحفظ
+        function showSaveIndicator() {
+            const indicator = document.getElementById('saveIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+
+        // إرسال النموذج النهائي
+        function submitForm() {
+            saveCurrentPageData();
+            
+            // إرسال البيانات إلى Google Sheets
+            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'; // ضع الرابط هنا
+            
+            const formDataToSend = new FormData();
+            Object.keys(formData).forEach(key => {
+                if (Array.isArray(formData[key])) {
+                    formDataToSend.append(key, formData[key].join(', '));
+                } else {
+                    formDataToSend.append(key, formData[key] || '');
+                }
+            });
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: formDataToSend
+            })
+            .then(response => response.text())
+            .then(result => {
+                alert('تم إرسال التحكيم بنجاح! شكراً لمساهمتكم القيمة.');
+                localStorage.removeItem('evaluationFormData');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('حدث خطأ في الإرسال. يرجى المحاولة مرة أخرى.');
+            });
+        }
+
+        // التحقق من الإجابات المطلوبة
+        function validateCurrentPage() {
+            // يمكن إضافة التحقق من الإجابات المطلوبة هنا
+            return true;
+        }
+    </script>
+</body>
+</html><!-- المحور الثالث: الدعم الصفي وبناء البيئة الدامجة -->
+            <div class="page" id="page5">
+                <div class="page-title">المحور الثالث: الدعم الصفي وبناء البيئة الدامجة</div>
+                <div class="page-subtitle">
+                    <strong>المقصود:</strong> تهيئة القسم ليكون آمنًا ومحفزًا، وضمان مشاركة التلميذ في وضعية إعاقة ذهنية في الأنشطة الصفية مع أقرانه.<br>
+                    <strong>المراجع:</strong> دليل الأستاذ (ص. 63–68)، القرار 047.19 (المواد 4–5).
+                </div>
+
+                <div class="criteria-reminder">
+                    <h3>تذكير سريع بمعايير التقييم:</h3>
+                    <ul>
+                        <li><strong style="color: #e74c3c;">الوضوح والصياغة:</strong> 1=غير واضح → 5=واضح تماماً</li>
+                        <li><strong style="color: #f39c12;">الصلة والأهمية:</strong> 1=غير مرتبط → 5=ضروري ومرتبط</li>
+                        <li><strong style="color: #27ae60;">الشمولية والتطبيق:</strong> 1=لا يساهم → 5=يساهم بشكل أساسي</li>
+                    </ul>
+                </div>
+
+                <!-- البند 13 -->
+                <div class="item-card">
+                    <div class="item-number">البند 13 من 36</div>
+                    <div class="item-text">أدمج التلميذ في وضعية إعاقة ذهنية في أنشطة جماعية منذ الحصص الأولى لتعزيز انتمائه.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item13_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item13_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item13_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item13_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item13_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item13_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item13_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item13_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item13_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item13_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item13_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item13_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item13_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item13_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item13_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item13_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item13_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item13_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item13_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 14 -->
+                <div class="item-card">
+                    <div class="item-number">البند 14 من 36</div>
+                    <div class="item-text">أوفّر بيئة صفية آمنة نفسيًا واجتماعيًا تحفز المشاركة والمبادرة.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item14_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item14_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item14_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item14_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item14_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item14_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item14_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item14_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item14_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item14_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item14_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item14_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item14_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item14_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item14_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item14_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item14_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item14_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item14_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 15 -->
+                <div class="item-card">
+                    <div class="item-number">البند 15 من 36</div>
+                    <div class="item-text">أوفر فرصًا منتظمة للتفاعل والتعاون بين التلميذ في وضعية إعاقة ذهنية وزملائه.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item15_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item15_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item15_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item15_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item15_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item15_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item15_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item15_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item15_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item15_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item15_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item15_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item15_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item15_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item15_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item15_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item15_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item15_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item15_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 16 -->
+                <div class="item-card">
+                    <div class="item-number">البند 16 من 36</div>
+                    <div class="item-text">أطبق أساليب وقائية لتعزيز السلوك الإيجابي وتقليل السلوكيات الصعبة لدى التلميذ في وضعية إعاقة ذهنية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item16_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item16_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item16_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item16_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item16_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item16_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item16_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item16_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item16_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item16_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item16_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item16_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item16_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item16_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item16_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item16_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item16_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item16_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item16_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 17 -->
+                <div class="item-card">
+                    <div class="item-number">البند 17 من 36</div>
+                    <div class="item-text">أمنح التلميذ في وضعية إعاقة ذهنية أدوارًا ومسؤوليات مناسبة لقدراته.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item17_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item17_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item17_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item17_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item17_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item17_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item17_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item17_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item17_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item17_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item17_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item17_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item17_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item17_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item17_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item17_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item17_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item17_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item17_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 18 -->
+                <div class="item-card">
+                    <div class="item-number">البند 18 من 36</div>
+                    <div class="item-text">أحتفي بإنجازات التلميذ في وضعية إعاقة ذهنية وأعرضها كنماذج إيجابية لزملائه.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item18_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item18_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item18_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item18_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item18_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item18_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item18_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item18_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item18_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item18_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item18_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item18_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item18_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item18_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item18_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item18_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item18_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item18_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item18_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 19 -->
+                <div class="item-card">
+                    <div class="item-number">البند 19 من 36</div>
+                    <div class="item-text">أنظم فضاء القسم بما ييسر الحركة والوصول الآمن للتلميذ في وضعية إعاقة ذهنية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item19_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item19_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item19_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item19_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item19_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item19_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item19_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item19_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item19_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item19_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item19_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item19_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item19_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item19_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item19_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item19_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item19_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item19_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item19_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="general-comments">
+                    <label><strong>ملاحظات عامة حول المحور الثالث (اختياري):</strong></label>
+                    <textarea name="chapter3_comments" placeholder="اكتب ملاحظاتك العامة حول محور الدعم الصفي وبناء البيئة الدامجة..."></textarea>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevPage()">السابق</button>
+                    <button class="btn" onclick="nextPage()">التالي - المحور الرابع</button>
+                </div>
+            </div><!-- المحور الرابع: الاستفادة من قاعة الموارد والتعلمات الداعمة -->
+            <div class="page" id="page6">
+                <div class="page-title">المحور الرابع: الاستفادة من قاعة الموارد والتعلمات الداعمة</div>
+                <div class="page-subtitle">
+                    <strong>المقصود:</strong> استغلال قاعة الموارد لأنشطة دعم معرفية وحسية وحياتية مكملة للتعليم الصفي.<br>
+                    <strong>المراجع:</strong> الإطار المرجعي (ص. 41)، القرار 047.19 (المادة 6).
+                </div>
+
+                <div class="criteria-reminder">
+                    <h3>تذكير سريع بمعايير التقييم:</h3>
+                    <ul>
+                        <li><strong style="color: #e74c3c;">الوضوح والصياغة:</strong> 1=غير واضح → 5=واضح تماماً</li>
+                        <li><strong style="color: #f39c12;">الصلة والأهمية:</strong> 1=غير مرتبط → 5=ضروري ومرتبط</li>
+                        <li><strong style="color: #27ae60;">الشمولية والتطبيق:</strong> 1=لا يساهم → 5=يساهم بشكل أساسي</li>
+                    </ul>
+                </div>
+
+                <!-- البند 20 -->
+                <div class="item-card">
+                    <div class="item-number">البند 20 من 36</div>
+                    <div class="item-text">أستفيد من قاعة الموارد لتقديم دعم فردي أو جماعي للتلميذ في وضعية إعاقة ذهنية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item20_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item20_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item20_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item20_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item20_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item20_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item20_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item20_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item20_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item20_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item20_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item20_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item20_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item20_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item20_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item20_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item20_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item20_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item20_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 21 -->
+                <div class="item-card">
+                    <div class="item-number">البند 21 من 36</div>
+                    <div class="item-text">أنظم التناوب بين زمن القسم وزمن قاعة الموارد لضمان التكامل.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item21_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item21_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item21_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item21_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item21_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item21_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item21_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item21_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item21_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item21_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item21_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item21_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item21_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item21_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item21_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item21_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item21_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item21_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item21_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 22 -->
+                <div class="item-card">
+                    <div class="item-number">البند 22 من 36</div>
+                    <div class="item-text">أنمي الإيقاظ الذهني والانتباه والتركيز لدى التلميذ في وضعية إعاقة ذهنية من خلال أنشطة موجهة.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item22_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item22_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item22_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item22_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item22_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item22_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item22_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item22_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item22_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item22_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item22_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item22_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item22_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item22_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item22_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item22_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item22_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item22_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item22_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 23 -->
+                <div class="item-card">
+                    <div class="item-number">البند 23 من 36</div>
+                    <div class="item-text">أنمي المهارات الحركية الدقيقة لدى التلميذ في وضعية إعاقة ذهنية من خلال أنشطة عملية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item23_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item23_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item23_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item23_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item23_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item23_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item23_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item23_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item23_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item23_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item23_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item23_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item23_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item23_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item23_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item23_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item23_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item23_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item23_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 24 -->
+                <div class="item-card">
+                    <div class="item-number">البند 24 من 36</div>
+                    <div class="item-text">أطور الإدراك البصري والتمييز البصري-المكاني لدى التلميذ في وضعية إعاقة ذهنية عبر تدريبات موجهة.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item24_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item24_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item24_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item24_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item24_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item24_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item24_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item24_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item24_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item24_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item24_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item24_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item24_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item24_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item24_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item24_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item24_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item24_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item24_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 25 -->
+                <div class="item-card">
+                    <div class="item-number">البند 25 من 36</div>
+                    <div class="item-text">أنمي مهارات التواصل لدى التلميذ في وضعية إعاقة ذهنية عبر أنشطة جماعية أو لعب موجه.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item25_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item25_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item25_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item25_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item25_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item25_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item25_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item25_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item25_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item25_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item25_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item25_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item25_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item25_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item25_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item25_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item25_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item25_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item25_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 26 -->
+                <div class="item-card">
+                    <div class="item-number">البند 26 من 36</div>
+                    <div class="item-text">أدرّب التلميذ في وضعية إعاقة ذهنية على مهارات حياتية أساسية تعزز استقلاليته.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item26_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item26_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item26_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item26_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item26_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item26_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item26_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item26_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item26_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item26_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item26_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item26_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item26_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item26_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item26_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item26_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item26_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item26_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item26_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="general-comments">
+                    <label><strong>ملاحظات عامة حول المحور الرابع (اختياري):</strong></label>
+                    <textarea name="chapter4_comments" placeholder="اكتب ملاحظاتك العامة حول محور الاستفادة من قاعة الموارد..."></textarea>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevPage()">السابق</button>
+                    <button class="btn" onclick="nextPage()">التالي - المحور الخامس</button>
+                </div>
+            </div><!-- المحور الخامس: التقويم -->
+            <div class="page" id="page7">
+                <div class="page-title">المحور الخامس: التقويم</div>
+                <div class="page-subtitle">
+                    <strong>المقصود:</strong> قياس تقدم التلميذ في وضعية إعاقة ذهنية باستخدام أدوات تكيفية ومقارنة أدائه بأهدافه الفردية.<br>
+                    <strong>المراجع:</strong> دليل الأستاذ (ص. 86–88)، القرار 047.19 (المادة 8).
+                </div>
+
+                <div class="criteria-reminder">
+                    <h3>تذكير سريع بمعايير التقييم:</h3>
+                    <ul>
+                        <li><strong style="color: #e74c3c;">الوضوح والصياغة:</strong> 1=غير واضح → 5=واضح تماماً</li>
+                        <li><strong style="color: #f39c12;">الصلة والأهمية:</strong> 1=غير مرتبط → 5=ضروري ومرتبط</li>
+                        <li><strong style="color: #27ae60;">الشمولية والتطبيق:</strong> 1=لا يساهم → 5=يساهم بشكل أساسي</li>
+                    </ul>
+                </div>
+
+                <!-- البند 27 -->
+                <div class="item-card">
+                    <div class="item-number">البند 27 من 36</div>
+                    <div class="item-text">أُكيّف أدوات التقييم (شفوي، عملي، رقمي) لتناسب احتياجات التلميذ في وضعية إعاقة ذهنية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item27_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item27_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item27_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item27_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item27_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item27_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item27_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item27_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item27_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item27_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item27_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item27_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item27_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item27_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item27_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item27_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item27_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item27_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item27_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 28 -->
+                <div class="item-card">
+                    <div class="item-number">البند 28 من 36</div>
+                    <div class="item-text">أطبق تكييفات الامتحانات مثل إعطاء وقت إضافي أو قراءة الأسئلة شفويًا.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item28_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item28_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item28_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item28_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item28_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item28_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item28_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item28_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item28_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item28_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشmولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item28_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item28_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item28_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item28_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item28_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item28_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item28_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item28_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item28_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 29 -->
+                <div class="item-card">
+                    <div class="item-number">البند 29 من 36</div>
+                    <div class="item-text">أقيم تقدم التلميذ بناءً على أهدافه الفردية وليس بالمقارنة مع أقرانه.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item29_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item29_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item29_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item29_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item29_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item29_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item29_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item29_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item29_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item29_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item29_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item29_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item29_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item29_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item29_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item29_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item29_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item29_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item29_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 30 -->
+                <div class="item-card">
+                    <div class="item-number">البند 30 من 36</div>
+                    <div class="item-text">أستخدم التقويم التكويني المستمر لتعديل طرائق التدريس للتلميذ في وضعية إعاقة ذهنية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item30_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item30_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item30_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item30_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item30_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item30_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item30_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item30_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item30_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item30_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item30_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item30_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item30_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item30_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item30_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item30_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item30_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item30_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item30_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 31 -->
+                <div class="item-card">
+                    <div class="item-number">البند 31 من 36</div>
+                    <div class="item-text">أجري تقويمات مرحلية دورية لتحديث المشروع البيداغوجي الفردي للتلميذ في وضعية إعاقة ذهنية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item31_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item31_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item31_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item31_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item31_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item31_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item31_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item31_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item31_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item31_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item31_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item31_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item31_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item31_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item31_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item31_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item31_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item31_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item31_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="general-comments">
+                    <label><strong>ملاحظات عامة حول المحور الخامس (اختياري):</strong></label>
+                    <textarea name="chapter5_comments" placeholder="اكتب ملاحظاتك العامة حول محور التقويم..."></textarea>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevPage()">السابق</button>
+                    <button class="btn" onclick="nextPage()">التالي - المحور السادس</button>
+                </div>
+            </div><!-- المحور السادس: التوثيق والمتابعة -->
+            <div class="page" id="page8">
+                <div class="page-title">المحور السادس: التوثيق والمتابعة</div>
+                <div class="page-subtitle">
+                    <strong>المقصود:</strong> تسجيل وتتبع تقدم التلميذ في وضعية إعاقة ذهنية، ومشاركة النتائج مع المعنيين، واتخاذ القرارات بناءً على البيانات.<br>
+                    <strong>المراجع:</strong> الإطار المرجعي (ص. 61)، دليل الأستاذ (ص. 88)، القرار 047.19 (المادة 9).
+                </div>
+
+                <div class="criteria-reminder">
+                    <h3>تذكير سريع بمعايير التقييم:</h3>
+                    <ul>
+                        <li><strong style="color: #e74c3c;">الوضوح والصياغة:</strong> 1=غير واضح → 5=واضح تماماً</li>
+                        <li><strong style="color: #f39c12;">الصلة والأهمية:</strong> 1=غير مرتبط → 5=ضروري ومرتبط</li>
+                        <li><strong style="color: #27ae60;">الشمولية والتطبيق:</strong> 1=لا يساهم → 5=يساهم بشكل أساسي</li>
+                    </ul>
+                </div>
+
+                <!-- البند 32 -->
+                <div class="item-card">
+                    <div class="item-number">البند 32 من 36</div>
+                    <div class="item-text">أوثق تقدم التلميذ في وضعية إعاقة ذهنية في ملف خاص يضم نتائج التقويم والملاحظات.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item32_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item32_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item32_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item32_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item32_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item32_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item32_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item32_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item32_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item32_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item32_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item32_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item32_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item32_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item32_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item32_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item32_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item32_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item32_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 33 -->
+                <div class="item-card">
+                    <div class="item-number">البند 33 من 36</div>
+                    <div class="item-text">أشارك نتائج المتابعة مع الأسرة والفريق التربوي والطبي.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item33_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item33_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item33_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item33_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item33_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item33_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item33_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item33_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item33_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item33_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item33_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item33_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item33_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item33_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item33_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item33_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item33_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item33_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item33_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 34 -->
+                <div class="item-card">
+                    <div class="item-number">البند 34 من 36</div>
+                    <div class="item-text">أستخدم سجلات زمنية لرصد إنجاز التلميذ في وضعية إعاقة ذهنية بالنسبة للأهداف المحددة.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item34_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item34_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item34_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item34_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item34_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item34_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item34_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item34_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item34_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item34_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item34_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item34_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item34_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item34_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item34_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item34_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item34_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item34_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item34_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 35 -->
+                <div class="item-card">
+                    <div class="item-number">البند 35 من 36</div>
+                    <div class="item-text">أقدم مقترحات مكتوبة لتعديل الأهداف أو إحالة التلميذ على خدمات دعم إضافية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item35_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item35_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item35_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item35_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item35_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item35_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item35_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item35_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item35_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item35_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item35_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item35_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item35_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item35_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item35_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item35_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item35_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item35_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item35_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البند 36 -->
+                <div class="item-card">
+                    <div class="item-number">البند 36 من 36</div>
+                    <div class="item-text">أسجل في تقارير دورية أثر التعديلات على أداء التلميذ في وضعية إعاقة ذهنية.</div>
+                    
+                    <div class="evaluation-section">
+                        <div class="criterion clarity">
+                            <div class="criterion-label">الوضوح والصياغة:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item36_clarity" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item36_clarity" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item36_clarity" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item36_clarity" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item36_clarity" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion relevance">
+                            <div class="criterion-label">الصلة والأهمية:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item36_relevance" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item36_relevance" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item36_relevance" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item36_relevance" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item36_relevance" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="criterion comprehensiveness">
+                            <div class="criterion-label">الشمولية والتطبيق:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item36_comprehensiveness" value="1"><span>1</span></label>
+                                <label><input type="radio" name="item36_comprehensiveness" value="2"><span>2</span></label>
+                                <label><input type="radio" name="item36_comprehensiveness" value="3"><span>3</span></label>
+                                <label><input type="radio" name="item36_comprehensiveness" value="4"><span>4</span></label>
+                                <label><input type="radio" name="item36_comprehensiveness" value="5"><span>5</span></label>
+                            </div>
+                        </div>
+
+                        <div class="final-decision">
+                            <div class="criterion-label">القرار النهائي:</div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="item36_decision" value="نعم، كما هو"><span>نعم، كما هو</span></label>
+                                <label><input type="radio" name="item36_decision" value="نعم، مع تعديل"><span>نعم، مع تعديل</span></label>
+                                <label><input type="radio" name="item36_decision" value="لا، يُحذف"><span>لا، يُحذف</span></label>
+                            </div>
+                        </div>
+
+                        <div class="comments-section">
+                            <label>ملاحظات (اختياري):</label>
+                            <textarea name="item36_comments" placeholder="اكتب ملاحظاتك حول هذا البند..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="general-comments">
+                    <label><strong>ملاحظات عامة حول المحور السادس (اختياري):</strong></label>
+                    <textarea name="chapter6_comments" placeholder="اكتب ملاحظاتك العامة حول محور التوثيق والمتابعة..."></textarea>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevPage()">السابق</button>
+                    <button class="btn" onclick="nextPage()">التالي - التقييم العام</button>
+                </div>
+            </div><!-- صفحة التقييم العام والشكر -->
+            <div class="page" id="page9">
+                <div class="page-title">التقييم العام والتوصيات النهائية</div>
+                
+                <div class="final-evaluation">
+                    <h3>تقييمكم الشامل للاستمارة</h3>
+                    
+                    <div class="evaluation-grid">
+                        <div class="form-group">
+                            <label><strong>1. كيف تقيمون الاستمارة بشكل عام؟</strong></label>
+                            <div class="radio-group" style="flex-direction: column; align-items: flex-start;">
+                                <label><input type="radio" name="overall_rating" value="ممتازة"><span>ممتازة</span></label>
+                                <label><input type="radio" name="overall_rating" value="جيدة جداً"><span>جيدة جداً</span></label>
+                                <label><input type="radio" name="overall_rating" value="جيدة"><span>جيدة</span></label>
+                                <label><input type="radio" name="overall_rating" value="مقبولة"><span>مقبولة</span></label>
+                                <label><input type="radio" name="overall_rating" value="تحتاج تطوير شامل"><span>تحتاج تطوير شامل</span></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>2. هل تغطي الاستمارة جميع جوانب الممارسات التربوية الدامجة؟</strong></label>
+                            <div class="radio-group" style="flex-direction: column; align-items: flex-start;">
+                                <label><input type="radio" name="comprehensive_coverage" value="نعم، بشكل شامل"><span>نعم، بشكل شامل</span></label>
+                                <label><input type="radio" name="comprehensive_coverage" value="نعم، إلى حد كبير"><span>نعم، إلى حد كبير</span></label>
+                                <label><input type="radio" name="comprehensive_coverage" value="جزئياً"><span>جزئياً</span></label>
+                                <label><input type="radio" name="comprehensive_coverage" value="لا"><span>لا</span></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>3. هل عدد البنود (36) مناسب؟</strong></label>
+                            <div class="radio-group" style="flex-direction: column; align-items: flex-start;">
+                                <label><input type="radio" name="item_count_suitable" value="مناسب تماماً"><span>مناسب تماماً</span></label>
+                                <label><input type="radio" name="item_count_suitable" value="كثير قليلاً"><span>كثير قليلاً</span></label>
+                                <label><input type="radio" name="item_count_suitable" value="قليل"><span>قليل</span></label>
+                                <label><input type="radio" name="item_count_suitable" value="كثير جداً"><span>كثير جداً</span></label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>4. هل تنصحون باستخدام هذه الاستمارة لقياس الممارسات الدامجة؟</strong></label>
+                            <div class="radio-group" style="flex-direction: column; align-items: flex-start;">
+                                <label><input type="radio" name="recommend_usage" value="نعم، بقوة"><span>نعم، بقوة</span></label>
+                                <label><input type="radio" name="recommend_usage" value="نعم"><span>نعم</span></label>
+                                <label><input type="radio" name="recommend_usage" value="بعد التعديل"><span>بعد التعديل</span></label>
+                                <label><input type="radio" name="recommend_usage" value="لا"><span>لا</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>5. ما هي أهم التعديلات المطلوبة على الاستمارة؟</strong></label>
+                        <textarea name="major_modifications" placeholder="اكتبوا أهم التعديلات التي ترون ضرورة إجرائها..." style="min-height: 100px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>6. هل توجد بنود مهمة مفقودة تقترحون إضافتها؟</strong></label>
+                        <textarea name="missing_items" placeholder="اذكروا البنود المهمة التي ترون ضرورة إضافتها..." style="min-height: 80px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>7. هل توجد بنود تقترحون حذفها؟ ولماذا؟</strong></label>
+                        <textarea name="items_to_remove" placeholder="اذكروا البنود التي ترون ضرورة حذفها مع ذكر الأسباب..." style="min-height: 80px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>8. اقتراحات أخرى لتحسين الاستمارة:</strong></label>
+                        <textarea name="other_suggestions" placeholder="أي اقتراحات أخرى لتطوير وتحسين الاستمارة..." style="min-height: 100px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>9. هل تودون الحصول على ملخص نتائج التحكيم؟</strong></label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="results_summary" value="نعم"><span>نعم</span></label>
+                            <label><input type="radio" name="results_summary" value="لا"><span>لا</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>🎉 شكراً جزيلاً لكم!</strong><br>
+                    مساهمتكم القيمة ستساعد في تطوير أداة بحثية عالية الجودة تخدم التربية الدامجة في المغرب.
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" onclick="prevPage()">السابق</button>
+                    <button class="btn" onclick="submitForm()" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">
+                        ✅ إرسال التحكيم النهائي
+                    </button>
+                </div>
+            </div>
+
+            <!-- صفحة الشكر النهائية -->
+            <div class="page" id="page10" style="text-align: center;">
+                <div class="page-title">تم إرسال التحكيم بنجاح!</div>
+                
+                <div style="font-size: 4em; color: #27ae60; margin: 30px 0;">✅</div>
+                
+                <div style="background: #d4edda; border: 2px solid #c3e6cb; border-radius: 10px; padding: 30px; margin: 30px 0;">
+                    <h3 style="color: #155724; margin-bottom: 15px;">شكراً جزيلاً لمساهمتكم القيمة!</h3>
+                    <p style="color: #155724; font-size: 1.1em; line-height: 1.6;">
+                        تم حفظ تقييمكم بنجاح وسيساهم في تطوير أداة بحثية عالية الجودة.<br>
+                        آراؤكم وتوصياتكم ستكون لها قيمة كبيرة في تحسين الممارسات التربوية الدامجة.
+                    </p>
+                </div>
+
+                <div style="background: #e3f2fd; border: 2px solid #2196f3; border-radius: 10px; padding: 20px; margin: 20px 0;">
+                    <p style="color: #1976d2; margin: 0;">
+                        <strong>💡 ملاحظة:</strong> يمكنكم إغلاق هذه النافذة الآن. 
+                        إذا طلبتم ملخص النتائج، سنرسله لكم عند انتهاء عملية التحكيم.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const totalPages = 10; // 0-9: الصفحات الأساسية، 10: الشكر النهائي
+        let formData = {};
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+            updateProgress();
+            setupAutoSave();
+        });
+
+        // التنقل بين الصفحات
+        function nextPage() {
+            if (currentPage < totalPages - 1) { // لا ننتقل للصفحة الأخيرة إلا بالإرسال
+                saveCurrentPageData();
+                document.getElementById(`page${currentPage}`).classList.remove('active');
+                currentPage++;
+                document.getElementById(`page${currentPage}`).classList.add('active');
+                updateProgress();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                saveCurrentPageData();
+                document.getElementById(`page${currentPage}`).classList.remove('active');
+                currentPage--;
+                document.getElementById(`page${currentPage}`).classList.add('active');
+                updateProgress();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // تحديث شريط التقدم
+        function updateProgress() {
+            const progress = ((currentPage + 1) / totalPages) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // حفظ بيانات الصفحة الحالية
+        function saveCurrentPageData() {
+            const currentPageElement = document.getElementById(`page${currentPage}`);
+            const inputs = currentPageElement.querySelectorAll('input, textarea, select');
+            
+            inputs.forEach(input => {
+                if (input.type === 'radio') {
+                    if (input.checked) {
+                        formData[input.name] = input.value;
+                    }
+                } else if (input.type === 'checkbox') {
+                    if (input.checked) {
+                        if (!formData[input.name]) formData[input.name] = [];
+                        if (!formData[input.name].includes(input.value)) {
+                            formData[input.name].push(input.value);
+                        }
+                    }
+                } else {
+                    formData[input.name] = input.value;
+                }
+            });
+
+            // حفظ في التخزين المحلي
+            localStorage.setItem('evaluationFormData', JSON.stringify(formData));
+        }
+
+        // تحميل البيانات المحفوظة
+        function loadSavedData() {
+            const savedData = localStorage.getItem('evaluationFormData');
+            if (savedData) {
+                formData = JSON.parse(savedData);
+                restoreFormData();
+            }
+        }
+
+        // استعادة البيانات في النموذج
+        function restoreFormData() {
+            Object.keys(formData).forEach(name => {
+                const elements = document.querySelectorAll(`[name="${name}"]`);
+                elements.forEach(element => {
+                    if (element.type === 'radio') {
+                        if (element.value === formData[name]) {
+                            element.checked = true;
+                        }
+                    } else if (element.type === 'checkbox') {
+                        if (Array.isArray(formData[name]) && formData[name].includes(element.value)) {
+                            element.checked = true;
+                        }
+                    } else {
+                        element.value = formData[name] || '';
+                    }
+                });
+            });
+        }
+
+        // الحفظ التلقائي
+        function setupAutoSave() {
+            setInterval(() => {
+                saveCurrentPageData();
+                showSaveIndicator();
+            }, 30000); // كل 30 ثانية
+        }
+
+        // إظهار مؤشر الحفظ
+        function showSaveIndicator() {
+            const indicator = document.getElementById('saveIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+
+        // إرسال النموذج النهائي
+        function submitForm() {
+            saveCurrentPageData();
+            
+            // تأكيد الإرسال
+            if (!confirm('هل أنتم متأكدون من إرسال التحكيم؟ لن تتمكنوا من التعديل بعد الإرسال.')) {
+                return;
+            }
+            
+            // إرسال البيانات إلى Google Sheets
+         const scriptURL = 'https://script.google.com/macros/s/AKfycbx1XY-zPav1TPCz6-0ItML-Cx7UXagf1TH1mIpvhPhAjm63txjVlEoVsT8wqxKyzCIhfg/exec';
+            
+            const formDataToSend = new FormData();
+            Object.keys(formData).forEach(key => {
+                if (Array.isArray(formData[key])) {
+                    formDataToSend.append(key, formData[key].join(', '));
+                } else {
+                    formDataToSend.append(key, formData[key] || '');
+                }
+            });
+
+            // إضافة timestamp
+            formDataToSend.append('submission_time', new Date().toISOString());
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: formDataToSend
+            })
+            .then(response => response.text())
+            .then(result => {
+                // الانتقال لصفحة الشكر
+                document.getElementById(`page${currentPage}`).classList.remove('active');
+                document.getElementById('page10').classList.add('active');
+                currentPage = 10;
+                updateProgress();
+                localStorage.removeItem('evaluationFormData');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('حدث خطأ في الإرسال. يرجى المحاولة مرة أخرى أو التواصل مع الباحث.');
+            });
+        }
+
+        // التحقق من الإجابات المطلوبة
+        function validateCurrentPage() {
+            // يمكن إضافة التحقق من الإجابات المطلوبة هنا
+            return true;
+        }
+
+        // حفظ إضافي عند مغادرة الصفحة
+        window.addEventListener('beforeunload', function() {
+            saveCurrentPageData();
+        });
+
+        // منع فقدان البيانات
+        window.addEventListener('beforeunload', function(e) {
+            if (currentPage > 0 && currentPage < 10) {
+                e.preventDefault();
+                e.returnValue = 'سيتم فقدان البيانات غير المحفوظة. هل تريد المغادرة؟';
+            }
+        });
+    </script>
+</body>
+</html>
